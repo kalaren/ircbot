@@ -9,7 +9,7 @@ class Headline
 
 	def initialize()
 
-		@server = "irc.irchighway.net"
+		@server = "chat.freenode.net"
 		@port = "6667"
 		@nick = "DrewEricSbot"
 		@channel = "#bitmaker"
@@ -20,9 +20,8 @@ class Headline
 		@s.puts "USER eksdsbot 0 * eksdsbot"
 		@s.puts "NICK #{@nick}"
 		@s.puts "JOIN #{@channel}"
-		# @s.puts "PRIVMSG #{@channel} :Hello this is Eric and Drew's headline bot."
-		# @s.puts "PRIVMSG #{@channel} :Type -headline for the Toronto Star's top headline"
-		# @s.puts "PRIVMSG #{@channel} :Type -star to check for a new headline"
+		@s.puts "PRIVMSG #{@channel} :Hello this is Eric and Drew's headline bot."
+		@s.puts "PRIVMSG #{@channel} :Type -headline for the Toronto Star's top headline"
 		@old_headline = ""
 		@new_headline = ""
 		@time = Time.new
@@ -64,8 +63,8 @@ class Headline
 				# 	msg = "BITMAKEREKS"
 				# end
 		  puts msg
-
-				if new_headline_check == true
+			check = new_headline_check
+				if  check == true
 					@s.puts "PRIVMSG #{@channel} :As of #{@time} there is a new thestar.com headline!"
 					@s.puts "PRIVMSG #{@channel} :#{@new_headline}"
 				end
@@ -81,14 +80,13 @@ class Headline
 		  if msg.include? "list"
 				@s.puts "PRIVMSG #{@channel} :Hello this is Eric Szeto and Drew Sing's headline bot."
 				@s.puts "PRIVMSG #{@channel} :Type -headline for the Toronto Star's top headline"
-				@s.puts "PRIVMSG #{@channel} :Type -star to check for a new headline"		  
 			end
 
 
 				  		
 		  if msg.include? "-headline"
 				new_headline_check
-		  	@s.puts "PRIVMSG #{@channel} :The current headline as of #{@time} at Toronto Star is:"
+		  	@s.puts "PRIVMSG #{@channel} :As of #{@time} the headline at thestar.com is:"
 		  	@s.puts "PRIVMSG #{@channel} :#{@old_headline}"
 		  end
 		end
