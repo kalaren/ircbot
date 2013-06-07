@@ -37,7 +37,8 @@ class Headline
 
 		  if msg.include? "headline"
 		  	headline = data.at_css(".headline").text.strip
-		  	@s.puts "PRIVMSG #{@channel} :The current headline at Toronto Star is: #{headline}"
+		  	@s.puts "PRIVMSG #{@channel} :The current headline at Toronto Star is:"
+		  	@s.puts "PRIVMSG #{@channel} :#{headline}"
 		  end
 		end
 	end
