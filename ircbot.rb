@@ -25,6 +25,7 @@ class Headline
 		# @s.puts "PRIVMSG #{@channel} :Type -star to check for a new headline"
 		@old_headline = ""
 		@new_headline = ""
+		@time = Time.new
 		
 
  
@@ -38,8 +39,10 @@ class Headline
 		@new_headline = data.at_css(".headline").text.strip
 
   	if @new_headline == @old_headline
+  		@time = Time.now
   		return false
   	else
+  		@time = Time.now
   		@old_headline = @new_headline
   		return true
   	end
@@ -62,6 +65,10 @@ class Headline
 				# end
 		  puts msg
 
+				if new_headline_check == true
+					@s.puts "PRIVMSG #{@channel} :As of #{@time} there is a new thestar.com headline!"
+					@s.puts "PRIVMSG #{@channel} :#{@new_headline}"
+				end
 		 #  if msg == Error
 		  	
 			# 		@s.puts "PRIVMSG #{@channel} :New headline!"
@@ -77,18 +84,11 @@ class Headline
 				@s.puts "PRIVMSG #{@channel} :Type -star to check for a new headline"		  
 			end
 
-			if msg.include? "-star"
-				if new_headline_check == true
-					@s.puts "PRIVMSG #{@channel} :New headline!"
-					@s.puts "PRIVMSG #{@channel} :#{@new_headline}"
-				else
-					@s.puts "PRIVMSG #{@channel} :Old headline :("
-				end
-			end
+
 				  		
 		  if msg.include? "-headline"
 				new_headline_check
-		  	@s.puts "PRIVMSG #{@channel} :The current headline at Toronto Star is:"
+		  	@s.puts "PRIVMSG #{@channel} :The current headline as of #{@time} at Toronto Star is:"
 		  	@s.puts "PRIVMSG #{@channel} :#{@old_headline}"
 		  end
 		end
