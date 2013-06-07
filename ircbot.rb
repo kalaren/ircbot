@@ -18,7 +18,8 @@ class Headline
 		@s.puts "USER eksdsbot 0 * eksdsbot"
 		@s.puts "NICK #{@nick}"
 		@s.puts "JOIN #{@channel}"
-		@s.puts "PRIVMSG #{@channel} :Hello from IRB Bot"
+		@s.puts "PRIVMSG #{@channel} :Hello this is Eric and Drew's headline bot."
+		@s.puts "PRIVMSG #{@channel} :Type -headline for the Toronto Star's top headline"
 		
 
  
@@ -35,7 +36,12 @@ class Headline
 		  msg = @s.gets
 		  puts msg
 
-		  if msg.include? "headline"
+		  if msg.include? "list"
+		  	@s.puts "PRIVMSG #{@channel} :Headline Bot Type -headline for the Toronto Star's top headline"
+		  end
+
+		  if msg.include? "-headline"
+
 		  	headline = data.at_css(".headline").text.strip
 		  	@s.puts "PRIVMSG #{@channel} :The current headline at Toronto Star is:"
 		  	@s.puts "PRIVMSG #{@channel} :#{headline}"
