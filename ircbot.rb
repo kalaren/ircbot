@@ -20,8 +20,8 @@ class Headline
 		@s.puts "USER eksdsbot 0 * eksdsbot"
 		@s.puts "NICK #{@nick}"
 		@s.puts "JOIN #{@channel}"
-		@s.puts "PRIVMSG #{@channel} :Hello this is Eric and Drew's headline bot."
-		@s.puts "PRIVMSG #{@channel} :Type -headline for the Toronto Star's top headline"
+		# @s.puts "PRIVMSG #{@channel} :Hello this is Eric and Drew's headline bot."
+		# @s.puts "PRIVMSG #{@channel} :Type -headline for the Toronto Star's top headline"
 		@old_headline = ""
 		@new_headline = ""
 		@time = Time.new
