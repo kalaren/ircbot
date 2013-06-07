@@ -1,5 +1,6 @@
 require "socket"
-
+require 'nokogiri'
+require 'open-uri'
 
 class Headline
 
@@ -18,6 +19,9 @@ class Headline
 		@s.puts "NICK #{@nick}"
 		@s.puts "JOIN #{@channel}"
 		@s.puts "PRIVMSG #{@channel} :Hello from IRB Bot"
+		
+
+ 
 	end
 
 	def send
@@ -26,11 +30,14 @@ class Headline
 	def run
 
 		until @s.eof? do
+			data = Nokogiri::HTML(open("http://thestar.com"))
+		  headline = ""
 		  msg = @s.gets
 		  puts msg
 
 		  if msg.include? "headline"
-		  	@s.puts "PRIVMSG #{@channel} :The current headline at Toronto Star is: #{}"
+		  	headline = data.at_css(".headline").text.strip
+		  	@s.puts "PRIVMSG #{@channel} :The current headline at Toronto Star is: #{headline}"
 		  end
 		end
 	end
