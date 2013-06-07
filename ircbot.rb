@@ -10,7 +10,7 @@ class Headline
 		@server = "chat.freenode.net"
 		@port = "6667"
 		@nick = "DrewEricSbot"
-		@channel = "#bitmaker"
+		@channel = "#bitmaker2"
 		@s = TCPSocket.open(@server, @port)
 		print("addr: ", @s.addr.join(":"), "\n")
 		print("peer: ", @s.peeraddr.join(":"), "\n")
