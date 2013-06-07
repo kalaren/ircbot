@@ -1,7 +1,7 @@
 require "socket"
 require 'nokogiri'
 require 'open-uri'
-require 'timeout'
+#require 'timeout'
 
 class Headline
 
@@ -65,6 +65,7 @@ class Headline
 		  puts msg
 			check = new_headline_check
 				if  check == true
+					new_headline_check
 					@s.puts "PRIVMSG #{@channel} :As of #{@time} there is a new thestar.com headline!"
 					@s.puts "PRIVMSG #{@channel} :#{@new_headline}"
 				end
