@@ -20,8 +20,8 @@ class Headline
 		@s.puts "USER eksdsbot 0 * eksdsbot"
 		@s.puts "NICK #{@nick}"
 		@s.puts "JOIN #{@channel}"
-		# @s.puts "PRIVMSG #{@channel} :Hello this is Eric and Drew's headline bot."
-		# @s.puts "PRIVMSG #{@channel} :Type -headline for the Toronto Star's top headline"
+		@s.puts "PRIVMSG #{@channel} :Hello this is Eric and Drew's headline bot."
+		@s.puts "PRIVMSG #{@channel} :Type -headline for the Toronto Star's top headline"
 		@old_headline = ""
 		@new_headline = ""
 		@time = Time.new
@@ -52,7 +52,7 @@ class Headline
 			loop do
 				sleep (60)
 				check = new_headline_check
-				if  check == true
+				if check == true
 					new_headline_check
 					@s.puts "PRIVMSG #{@channel} :As of #{@time} there is a new thestar.com headline!"
 					@s.puts "PRIVMSG #{@channel} :#{@new_headline}"
@@ -60,53 +60,33 @@ class Headline
 			end
 		end
 
-
-		
-
 		until @s.eof? do
-		  # ready = IO.select([@s], nil, nil, 10)
-		  #gets receives no inputs after x amount of time do something else
-		  # wait for input for 20 seconds, if nothing then run check
-		  msg = @s.gets
-		
-			 #  begin
-			 #  Timeout::timeout(5) do
-				# 				msg = @s.gets
-				# 			end
-				# rescue Timeout::Error
-				# 	msg = "BITMAKEREKS"
-				# end
-		  puts msg
-			# check = new_headline_check
-			# if  check == true
-			# 	new_headline_check
-			# 	@s.puts "PRIVMSG #{@channel} :As of #{@time} there is a new thestar.com headline!"
-			# 	@s.puts "PRIVMSG #{@channel} :#{@new_headline}"
 
-			# end
-		 #  if msg == Error
-		  	
-			# 		@s.puts "PRIVMSG #{@channel} :New headline!"
-			# 		@s.puts "PRIVMSG #{@channel} :#{@new_headline}"
-				
-			# 		@s.puts "PRIVMSG #{@channel} :Old headline :("
-				
-			# end
+		  msg = @s.gets
+		  puts msg
+
+		  if msg.include? "PING :"
+		  	@s.puts "PONG"
+		  	next
+		  end
 
 		  if msg.include? "PRIVMSG #{@channel} :list"
 				@s.puts "PRIVMSG #{@channel} :Hello this is Eric Szeto and Drew Sing's headline bot."
 				@s.puts "PRIVMSG #{@channel} :Type -headline for the Toronto Star's top headline"
+				next
 			end
-
-
 				  		
 		  if msg.include? "PRIVMSG #{@channel} :-headline"
 				new_headline_check
 		  	@s.puts "PRIVMSG #{@channel} :As of #{@time} the headline at thestar.com is:"
 		  	@s.puts "PRIVMSG #{@channel} :#{@old_headline}"
+		  	next
 		  end
+
 		end
+
 	end
+
 end
 
 bot = Headline.new
