@@ -48,16 +48,27 @@ class Headline
 
 	def run
 
+		t = Thread.new do
+			loop do
+				sleep (60)
+				check = new_headline_check
+				if  check == true
+					new_headline_check
+					@s.puts "PRIVMSG #{@channel} :As of #{@time} there is a new thestar.com headline!"
+					@s.puts "PRIVMSG #{@channel} :#{@new_headline}"
+				end
+			end
+		end
+
+
 		
 
 		until @s.eof? do
+		  # ready = IO.select([@s], nil, nil, 10)
 		  #gets receives no inputs after x amount of time do something else
 		  # wait for input for 20 seconds, if nothing then run check
-		  if ready
-		  	msg = @s.gets
-		  else
-		  	@s.puts "PRIVMSG #{@channel} :IO.select working"
-		  end
+		  msg = @s.gets
+		
 			 #  begin
 			 #  Timeout::timeout(5) do
 				# 				msg = @s.gets
@@ -66,13 +77,13 @@ class Headline
 				# 	msg = "BITMAKEREKS"
 				# end
 		  puts msg
-			check = new_headline_check
-				if  check == true
-					new_headline_check
-					@s.puts "PRIVMSG #{@channel} :As of #{@time} there is a new thestar.com headline!"
-					@s.puts "PRIVMSG #{@channel} :#{@new_headline}"
+			# check = new_headline_check
+			# if  check == true
+			# 	new_headline_check
+			# 	@s.puts "PRIVMSG #{@channel} :As of #{@time} there is a new thestar.com headline!"
+			# 	@s.puts "PRIVMSG #{@channel} :#{@new_headline}"
 
-				end
+			# end
 		 #  if msg == Error
 		  	
 			# 		@s.puts "PRIVMSG #{@channel} :New headline!"
