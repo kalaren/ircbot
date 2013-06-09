@@ -36,12 +36,10 @@ class Headline
 	def new_headline_check
 		data = Nokogiri::HTML(open("http://thestar.com"))
 		@new_headline = data.at_css(".headline").text.strip
-
+		@time = Time.now
   	if @new_headline == @old_headline
-  		@time = Time.now
   		return false
   	else
-  		@time = Time.now
   		@old_headline = @new_headline
   		return true
   	end
@@ -50,11 +48,16 @@ class Headline
 
 	def run
 
+		
+
 		until @s.eof? do
-		  
 		  #gets receives no inputs after x amount of time do something else
 		  # wait for input for 20 seconds, if nothing then run check
-		  msg = @s.gets
+		  if ready
+		  	msg = @s.gets
+		  else
+		  	@s.puts "PRIVMSG #{@channel} :IO.select working"
+		  end
 			 #  begin
 			 #  Timeout::timeout(5) do
 				# 				msg = @s.gets
@@ -68,6 +71,7 @@ class Headline
 					new_headline_check
 					@s.puts "PRIVMSG #{@channel} :As of #{@time} there is a new thestar.com headline!"
 					@s.puts "PRIVMSG #{@channel} :#{@new_headline}"
+
 				end
 		 #  if msg == Error
 		  	
@@ -78,14 +82,14 @@ class Headline
 				
 			# end
 
-		  if msg.include? "list"
+		  if msg.include? "PRIVMSG #{@channel} :list"
 				@s.puts "PRIVMSG #{@channel} :Hello this is Eric Szeto and Drew Sing's headline bot."
 				@s.puts "PRIVMSG #{@channel} :Type -headline for the Toronto Star's top headline"
 			end
 
 
 				  		
-		  if msg.include? "-headline"
+		  if msg.include? "PRIVMSG #{@channel} :-headline"
 				new_headline_check
 		  	@s.puts "PRIVMSG #{@channel} :As of #{@time} the headline at thestar.com is:"
 		  	@s.puts "PRIVMSG #{@channel} :#{@old_headline}"
